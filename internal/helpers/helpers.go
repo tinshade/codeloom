@@ -5,6 +5,11 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"encoding/json"
+    "io/ioutil"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func RegisterEnvVars(logfile string) (map[string]string, error) {
@@ -34,4 +39,37 @@ func RegisterEnvVars(logfile string) (map[string]string, error) {
 		return dict, err
 	}
 	return dict, nil
+}
+
+
+
+func ReadStructFromJSON(file string) (map[string]interface{}, error){
+	// Read JSON file
+    data, err := ioutil.ReadFile(file)
+    if err != nil {
+        log.Fatal("Error reading JSON file:", err)
+		return nil, err
+    }
+	// Define a struct to hold JSON data
+	structure := make(map[string]interface{})
+
+	// Unmarshal JSON data into struct
+	err = json.Unmarshal(data, &structure)
+    if err != nil {
+        log.Fatal("Error parsing JSON:", err)
+		return nil, err
+    }
+	return structure, nil
+	
+
+}
+
+func ConvertToPrimitiveD(data map[string]interface{}) (bson.D, error){
+	var d primitive.D
+    for key, value := range data {
+        d = append(d, primitive.E{Key: key, Value: value})
+    }
+
+	bsonD := bson.D(d)
+	return bsonD, nil
 }

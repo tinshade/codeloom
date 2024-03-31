@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "_id": {
+        "$oid": "66086a575cf1ad8c7e29ed48"
+      },
+      "first_name": "Abhishek",
+      "last_name": "Iyengar",
+      "title": "Senior Software Engineer",
+      "email": "iyengar.abhi@gmail.com",
+      "is_admin": true,
+      "is_reviewer": true,
+      "is_active": true,
+      "can_merge": true,
+      "token": "thisismygithubclientpersonalaccesstoken",
+      "token_end_date": "2025-03-30T00:00:00Z",
+      "password": "#Abhishek98",
+      "group": {},
+      "joined_on": "2025-03-30T00:00:00Z"
+    },
+    {
+      "_id": {
+        "$oid": "6609bf3762528d1c8751dd0f"
+      },
+      "first_name": "Larissa",
+      "last_name": "Pinto",
+      "title": "Booty Developer",
+      "email": "larissa.pinto98@gmail.com",
+      "is_admin": true,
+      "is_reviewer": true,
+      "is_active": true,
+      "can_merge": true,
+      "token": "thisilalicahasgithubclientpersonalaccesstoken",
+      "token_end_date": "2025-03-30T00:00:00Z",
+      "password": "#Larissa98",
+      "group": {},
+      "joined_on": "2025-03-30T00:00:00Z"
+    }
+  ]
+}

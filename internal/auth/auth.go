@@ -119,5 +119,9 @@ func DecodeJWT(_ http.ResponseWriter, request *http.Request) (string, error) {
 }
 
 func CheckForEnvVars() {
-	fmt.Println("SYSTEM VARS: ", os.Getenv("JWT_SECRET"))
+	if os.Getenv("JWT_SECRET") == "" {
+		fmt.Println("Something went wrong while starting up the server!")
+	}else{
+		fmt.Println("ENV Variables loaded successfully!")
+	}
 }
