@@ -8,7 +8,6 @@ import (
 	"github.com/tinshade/codeloom/internal/auth"
 	"github.com/tinshade/codeloom/internal/helpers"
 	"github.com/tinshade/codeloom/internal/routes"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
