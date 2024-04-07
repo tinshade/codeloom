@@ -10,6 +10,17 @@ This is supposed to be a sample project to behave as a ticketing system that als
 
 
 
+### Authentication System
+1. Checking if account exists
+2. Login by creating a new JWT token
+3. Forgot Password by checking if the email exists and allowing changing of password via a different API
+4. Registering a user 
+5. Authorization middleware that checks if user has permission to perform the action
+6. Logout API that will remove / invalidate the existing JWT token
+7. JWT token refresh module
+
+
+
 ### PR Management System 
 
 All GitHub API references are here[https://docs.github.com/en/rest/pulls?apiVersion=2022-11-28]

@@ -21,5 +21,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func apiDataHandler(w http.ResponseWriter, r *http.Request) {
 	data := "Some data from the API"
+	auth.HandleReqRes(w, r)
+
 	fmt.Fprintln(w, data)
 }

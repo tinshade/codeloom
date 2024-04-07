@@ -8,7 +8,6 @@ import (
 	"github.com/tinshade/codeloom/internal/auth"
 	"github.com/tinshade/codeloom/internal/helpers"
 	"github.com/tinshade/codeloom/internal/routes"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func CustomServer() {
@@ -22,28 +21,16 @@ func CustomServer() {
 	}
 }
 
-var _, err = helpers.RegisterEnvVars(".env")
-
-func handleInitialDBSetup() {
-	var DBName string = os.Getenv("DB_NAME")
-	var CollectionName string = os.Getenv("COLLECTION_NAME")
-	var collection *mongo.Collection = helpers.CreateCollection(DBName, CollectionName, helpers.ClientInstance)
-
-	//* LOADING FIXTURES FROM PATH
-	var usersFixturePath string = fmt.Sprintf("%s/users.json", helpers.FIXTURES_BASE_PATH)
-
-	helpers.LoadFixtures(usersFixturePath, collection)
-}
-
 func main() {
-	auth.CheckForEnvVars()
+	var _, err = helpers.RegisterEnvVars(".env")
 	if err != nil {
 		fmt.Println("Something went wrong while starting up the server!")
 	}
+	auth.CheckForEnvVars()
 
 	var isFirstRun string = os.Getenv("SHOULD_CREATE_COLLECTION")
 	if isFirstRun == "true" {
-		handleInitialDBSetup()
+		helpers.HandleInitialDBSetup()
 	}
 
 	CustomServer()

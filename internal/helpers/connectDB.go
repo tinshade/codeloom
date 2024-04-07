@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/tinshade/codeloom/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
-	"os"
 )
 
 var _, err = RegisterEnvVars(".env")
@@ -62,6 +63,16 @@ func CreateCollection(db_name string, collection_name string, client *mongo.Clie
 	var collection *mongo.Collection = client.Database(db_name).Collection(collection_name)
 	return collection
 
+}
+func HandleInitialDBSetup() {
+	var DBName string = os.Getenv("DB_NAME")
+	var CollectionName string = os.Getenv("COLLECTION_NAME")
+	var collection *mongo.Collection = CreateCollection(DBName, CollectionName, ClientInstance)
+
+	//* LOADING FIXTURES FROM PATH
+	var usersFixturePath string = fmt.Sprintf("%s/users.json", FIXTURES_BASE_PATH)
+
+	LoadFixtures(usersFixturePath, collection)
 }
 
 func FindOne(query bson.D, collection *mongo.Collection) models.Any {
@@ -171,7 +182,7 @@ func UpdateMany(query bson.D, updateQuery bson.D, collection *mongo.Collection) 
 	return document, nil
 }
 
-func DeleteRecords(deletionType string, query string, collection *mongo.Collection) bool {
+func DeleteRecords(deletionType string, query bson.D, collection *mongo.Collection) bool {
 	if deletionType == "many" {
 		deleteResult, err := collection.DeleteMany(context.Background(), query)
 		if err != nil {

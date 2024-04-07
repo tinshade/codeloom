@@ -29,11 +29,11 @@ func findOne(query bson.D, collection *mongo.Collection) {
 }
 
 func deleteRecords(query bson.D, collection *mongo.Collection) {
-	helpers.DeleteRecords(query, collection)
+	helpers.DeleteRecords("many", query, collection)
 }
 
 func DBTests() {
-	var CollectionInstance *mongo.Collection = helpers.GetCollectionInstance("users", main.ClientInstance)
+	var CollectionInstance *mongo.Collection = helpers.GetCollectionInstance("users", helpers.ClientInstance)
 	query := bson.D{{"is_admin", true}}
 	deletionQuery := bson.D{{"first_name", "Lari2"}}
 	findMany(query, CollectionInstance)

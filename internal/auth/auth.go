@@ -8,7 +8,10 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/tinshade/codeloom/internal/helpers"
 )
+
+var _, envErr = helpers.RegisterEnvVars(".env")
 
 type Message struct {
 	Status string `json:"string"`
@@ -22,6 +25,7 @@ func HandleReqRes(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		return
 	}
+	fmt.Println("This is API incoming", message)
 	err = json.NewEncoder(writer).Encode(message)
 	if err != nil {
 		return
@@ -36,7 +40,8 @@ func GenerateJWT() (string, error) {
 	claims["user"] = "username"
 
 	//* Signing the JWT token
-	tokenString, err := token.SignedString("SAMPLEKEY")
+	var JWTKey string = os.Getenv("JWT_SECRET")
+	tokenString, err := token.SignedString(JWTKey)
 	if err != nil {
 		return "", err
 	}
@@ -121,7 +126,7 @@ func DecodeJWT(_ http.ResponseWriter, request *http.Request) (string, error) {
 func CheckForEnvVars() {
 	if os.Getenv("JWT_SECRET") == "" {
 		fmt.Println("Something went wrong while starting up the server!")
-	}else{
+	} else {
 		fmt.Println("ENV Variables loaded successfully!")
 	}
 }
